@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ course.code }} - {{ course.name }} Textbooks</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #2c3e50; }
+        h2 { color: #34495e; margin-top: 30px; }
+        form { margin-bottom: 30px; }
+        input, button { padding: 8px; margin-top: 5px; }
+        button { cursor: pointer; background-color: #3498db; color: white; border: none; border-radius: 4px; }
+        button:hover { background-color: #2980b9; }
+        ul { list-style-type: disc; margin-left: 20px; }
+        li { margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+
+<h1>{{ course.code }} – {{ course.name }}</h1>
+
+<h2>Add a New Textbook</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Textbook</button>
+</form>
+
+<h2>All Textbooks</h2>
+<ul>
+    {% for book in textbooks %}
+        <li>{{ book.title }} by {{ book.author }}{% if book.isbn %} (ISBN: {{ book.isbn }}){% endif %}</li>
+    {% empty %}
+        <li>No textbooks added yet.</li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>
