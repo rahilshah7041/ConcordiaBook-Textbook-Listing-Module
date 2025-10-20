@@ -6,15 +6,6 @@
     <a class="button" href="{% url 'all_textbooks' %}">Back to All Textbooks</a>
 </div>
 
-<section class="section form-card">
-    <h3>Add a Textbook for {{ course.code }}</h3>
-    <form method="post" novalidate>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="button">Add Textbook</button>
-    </form>
-</section>
-
 <section class="section">
     <h3>Available Textbooks for {{ course.code }}</h3>
     {% if textbooks %}
@@ -41,6 +32,15 @@
     {% else %}
         <p class="muted">No textbooks available for this course.</p>
     {% endif %}
+</section>
+
+<section class="section form-card">
+    <h3>Add a Textbook for {{ course.code }}</h3>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button">Add Textbook</button>
+    </form>
 </section>
 
 {% endblock %}

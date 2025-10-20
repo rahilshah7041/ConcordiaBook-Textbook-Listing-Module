@@ -29,7 +29,7 @@ def course_textbook(request, course_code):
             tb = form.save(commit=False)
             tb.course = course
             tb.save()
-            return redirect('course_textbook', course_code=course.code)
+            return redirect('course_textbooks', course_code=course.code)
     else:
         form = TextbookForm()
 
