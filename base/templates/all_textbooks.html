@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>All Textbooks Available for Trade</h2>
+
+<section class="section">
+    <h3>Textbooks are available for the following Courses. To add a new textbook click on 'Add Textbook'</h3>
+    {% if courses %}
+        <div class="course-links">
+            {% for c in courses %}
+                <a class="chip" href="{% url 'course_textbooks' c.code %}">{{ c.code }}</a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No courses registered yet.</p>
+    {% endif %}
+</section>
+
+<section class="section">
+    {% if textbooks %}
+        <table class="tb-table">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Edition</th>
+                    <th>Condition</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in textbooks %}
+                <tr>
+                    <td class="mono">{{ book.course.code }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.edition|default:"—" }}</td>
+                    <td>{{ book.get_condition_display }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="muted">No textbooks are currently available for trade.</p>
+    {% endif %}
+</section>
+{% endblock %}

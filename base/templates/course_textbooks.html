@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="course-header">
+    <h2>{{ course.code }} — {{ course.name }}</h2>
+    <a class="button" href="{% url 'all_textbooks' %}">Back to All Textbooks</a>
+</div>
+
+<section class="section form-card">
+    <h3>Add a Textbook for {{ course.code }}</h3>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button">Add Textbook</button>
+    </form>
+</section>
+
+<section class="section">
+    <h3>Available Textbooks for {{ course.code }}</h3>
+    {% if textbooks %}
+        <table class="tb-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Edition</th>
+                    <th>Condition</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in textbooks %}
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.edition|default:"—" }}</td>
+                    <td>{{ book.get_condition_display }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="muted">No textbooks available for this course.</p>
+    {% endif %}
+</section>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Add a Textbook (Any Course)</h2>
+<p>Use this form to add a textbook to any course. Enter the course code manually — if it doesn't exist, it will be created automatically.</p>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="button">Add Textbook</button>
+</form>
+
+<a href="/" class="button">Back to All Textbooks</a>
+{% endblock %}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CONCORDIA BOOK</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'base/style.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <h1 class="brand">CONCORDIA BOOK</h1>
+            <nav class="main-nav">
+                <a href="{% url 'all_textbooks' %}">All Textbooks</a>
+                <a href="{% url 'add_textbook_any' %}">Add Textbook</a>
+                <!-- link to course add page (we'll show a small Courses menu on the homepage) -->
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>Concordia Book | Built for COEN6311 </p>
+        </div>
+    </footer>
+</body>
+</html>
