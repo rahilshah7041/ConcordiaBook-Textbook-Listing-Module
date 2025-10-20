@@ -19,5 +19,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('base.urls')),  # include your base app URLs
+    path('', include('base.urls')),  # root handled by base app
 ]

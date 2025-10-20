@@ -1,39 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ course.code }} - {{ course.name }} Textbooks</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        h1 { color: #2c3e50; }
-        h2 { color: #34495e; margin-top: 30px; }
-        form { margin-bottom: 30px; }
-        input, button { padding: 8px; margin-top: 5px; }
-        button { cursor: pointer; background-color: #3498db; color: white; border: none; border-radius: 4px; }
-        button:hover { background-color: #2980b9; }
-        ul { list-style-type: disc; margin-left: 20px; }
-        li { margin-bottom: 8px; }
-    </style>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
 
-<h1>{{ course.code }} – {{ course.name }}</h1>
+<div class="course-header">
+    <h2>{{ course.code }} — {{ course.name }}</h2>
+    <a class="button" href="{% url 'all_textbooks' %}">Back to All Textbooks</a>
+</div>
 
-<h2>Add a New Textbook</h2>
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Add Textbook</button>
-</form>
+<section class="section form-card">
+    <h3>Add a Textbook for {{ course.code }}</h3>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button">Add Textbook</button>
+    </form>
+</section>
 
-<h2>All Textbooks</h2>
-<ul>
-    {% for book in textbooks %}
-        <li>{{ book.title }} by {{ book.author }}{% if book.isbn %} (ISBN: {{ book.isbn }}){% endif %}</li>
-    {% empty %}
-        <li>No textbooks added yet.</li>
-    {% endfor %}
-</ul>
+<section class="section">
+    <h3>Available Textbooks for {{ course.code }}</h3>
+    {% if textbooks %}
+        <table class="tb-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Edition</th>
+                    <th>Condition</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in textbooks %}
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.edition|default:"—" }}</td>
+                    <td>{{ book.get_condition_display }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="muted">No textbooks available for this course.</p>
+    {% endif %}
+</section>
 
-</body>
-</html>
+{% endblock %}
